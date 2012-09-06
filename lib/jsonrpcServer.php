@@ -36,7 +36,9 @@ class jsonrpcServer extends rpcServer {
 			) {
 			// This is not a JSON-RPC request
 		    return false;
+
 		}
+
 		// reads the input data
 		$request = json_decode(file_get_contents('php://input'),true);
         // executes the task on local object
@@ -48,7 +50,7 @@ class jsonrpcServer extends rpcServer {
                     'error'  =>  'unset event'
                 );
             else
-                if ($result = @call_user_func_array( $this->functions[$request['method']],$request['params'])) {
+                if ($result = call_user_func_array( $this->functions[$request['method']],$request['params'])) {
                     $response = array (
                                         'id' => $request['id'],
                                         'result' => $result,

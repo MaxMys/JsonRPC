@@ -90,7 +90,7 @@ class jsonrpcClient extends rpcClient {
 						'id' => $currentId
 						);
 		$request = json_encode($request);
-		$this->debug ='***** Request *****'."\n".$request."\n".'***** End Of request *****'."\n\n";
+		$debug ='***** Request *****'."\n".$request."\n".'***** End Of request *****'."\n\n";
 		
 		// performs the HTTP POST
 		$opts = array ('http' => array (
@@ -104,7 +104,7 @@ class jsonrpcClient extends rpcClient {
 			while($row = fgets($fp)) {
 				$response.= trim($row)."\n";
 			}
-			$this->debug && $this->debug.='***** Server response *****'."\n".$response.'***** End of server response *****'."\n";
+			$debug && $debug.='***** Server response *****'."\n".$response.'***** End of server response *****'."\n";
 			$response = json_decode($response,true);
 		} else {
 			throw new Exception('Unable to connect to '.$this->url);
@@ -112,7 +112,7 @@ class jsonrpcClient extends rpcClient {
 		
 		// debug output
         if ($this->debug) {
-            echo nl2br($this->debug);
+            echo nl2br($debug);
         }
 
 		// final checks and return
@@ -137,9 +137,9 @@ class jsonrpcClient extends rpcClient {
      * @access public
      * @return null
      */
-    public function dial($address,$proxy='',$debuf=''){
+    public function dial($address,$debug='',$proxy=''){
 		// server URL
-        $this->address = $address;
+        $this->url = $address;
 		// proxy
 		empty($proxy) ? $this->proxy = '' : $this->proxy = $proxy;
 		// debug state
